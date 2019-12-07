@@ -99,8 +99,56 @@ class Csv:
 
 		csv.writer(file).writerows(lst)#
 		file.close()#
-
 #En esta clase se procede a leer los archivos csv y clasificarlos de acuerdo al tipo de informacion que estos tienen, cada "clasificacion" tiene una funcion propia
+
+class Catch_data:
+	def new_flight(self):
+		nFlight={}
+		id=str(input("Write id to add(AA###): "))
+		plate=str(input("Write plate to add: "))
+		origin = str(input("Write origin to add(city or place - COUNTRY): "))
+		destiny = str(input("Write destiny to add(city or place - COUNTRY): "))
+		departure = str(input("Write departure to add(######_####_Continent/City): "))
+		arriving = str(input("Write arriving to add(######_####_Continent/City): "))
+		status = str(input("\nboarded\nboarding\nin transit\nlanded\nlanding\nwaiting\nWrite status to add: "))
+		departure_gate = str(input("Write departure gate to add(A# or A##): "))
+		take_off_track = str(input("Write take off track to add(#): "))
+		arriving_gate = str(input("Write arriving gate to add(A# or A##): "))
+		landing_track = str(input("Write landing track to add(#): "))
+		pilot = str(input("Write pilot to add(AA####): "))
+		copilot = str(input("Write copilot to add(AA####): "))
+		attendants = str(input("Write attendants to add(AA####;AA####...): "))
+
+		n_flight= Flights(id, plate, origin, destiny, departure, arriving, status, departure_gate, take_off_track, arriving_gate, landing_track, pilot, copilot, attendants)
+		nFlight[id+plate]=n_flight
+		return nFlight
+
+	def new_traveller(self):
+		nTraveller={}
+		passport=str(input("Write passport to add(AA####): "))
+		forename = str(input("Write forename to add: "))
+		surname = str(input("Write surname to add: "))
+		date_of_birth = str(input("Write date of birth to add(YYMMDD): "))
+		country = str(input("Write country to add: "))
+		gender = str(input("Write gender to add(M ,F, NA): "))
+		marital_status = str(input("Write marital status to add(Single, Married, Widowed, Divorced): "))
+		
+		n_traveller=Travellers(passport, forename, surname, date_of_birth, country, gender, marital_status)
+		nTraveller[passport]=n_traveller
+		return nTraveller
+
+	def new_passenger(self):
+		nPassenger={}
+		flight=str(input("Write flight to add(AA###): "))
+		passport = str(input("Write passport to add(AA####): "))
+		flight_class = str(input("Write class to add: "))
+		seat = str(input("Write seat to add(##A): "))
+		location = str(input("Write location to add(check-in, security, boarded): "))
+
+		n_passenger=Passengers(flight, passport, flight_class, seat, location)
+		nPassenger[flight+passport]=n_passenger
+		return nPassenger
+
 class AirportAD:
 	#la estructura es identica para la captura de archivos como pilots o travellers, sin embargo, se considera que es mejor que cada uno tenga su propio funcionamiento ya que en un futuro podrian cambiar su contenido
 	#la estructura se basa en el estandar hecho en clase
@@ -191,6 +239,7 @@ class AirportAD:
 
 			flight = Flights(id, plate, origin, destiny, departure, arriving, status, departure_gate, take_off_track, arriving_gate, landing_track, pilot, copilot, attendants)
 			flights[id + plate] = flight
+			
 		return flights
 
 	def read_attendants_file(self):
@@ -388,3 +437,5 @@ class Gates_check:#
 
 		return bGate_list
 
+prueba=AirportAD()
+print(prueba.read_flights_file())
