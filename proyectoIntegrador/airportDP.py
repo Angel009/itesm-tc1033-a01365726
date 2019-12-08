@@ -2,6 +2,7 @@
 #fue interesante aprenderla a usar
 #los recursos en linea para acomodar los datos y posteriormente utilizar csv son buenas herramientas para casos como este.
 import csv
+from collections import ChainMap
 from airportUI import *
 #Gran parte de la esstructura fue hecha en el salon de clases
 class Passengers:#
@@ -147,7 +148,37 @@ class Catch_data:
 
 		n_passenger=Passengers(flight, passport, flight_class, seat, location)
 		nPassenger[flight+passport]=n_passenger
+		#pos=AirportAD().read_passengers_file().values()
+		#for flightPass in pos:
+			#if flight==pos[flightPass]:
+				#if pos[3]==seat:
+					#print("...seat is not available...")
+				#else:
+					#return nPassenger
 		return nPassenger
+class Add_data:
+	def __init__(self):
+		self.existent=AirportAD()
+		self.new=Catch_data()
+	
+	def add_passenger(self):
+		existent=self.existent.read_passengers_file()
+		new=self.new.new_passenger()
+		all_passengers=ChainMap(existent, new)
+		return all_passengers
+
+	def add_traveller(self):
+		existent=self.existent.read_travellers_file()
+		new=self.new.new_traveller()
+		all_travellers=ChainMap(existent, new)
+		return all_travellers
+
+	def add_flight(self):
+		existent=self.existent.read_flights_file()
+		new=self.new.new_flight()
+		all_flights=ChainMap(existent, new)
+		return all_flights
+
 
 class AirportAD:
 	#la estructura es identica para la captura de archivos como pilots o travellers, sin embargo, se considera que es mejor que cada uno tenga su propio funcionamiento ya que en un futuro podrian cambiar su contenido
@@ -239,7 +270,7 @@ class AirportAD:
 
 			flight = Flights(id, plate, origin, destiny, departure, arriving, status, departure_gate, take_off_track, arriving_gate, landing_track, pilot, copilot, attendants)
 			flights[id + plate] = flight
-			
+
 		return flights
 
 	def read_attendants_file(self):
@@ -437,5 +468,8 @@ class Gates_check:#
 
 		return bGate_list
 
-prueba=AirportAD()
-print(prueba.read_flights_file())
+
+b=Add_data().add_passenger()
+print(b)
+
+
